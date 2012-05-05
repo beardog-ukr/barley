@@ -13,3 +13,8 @@ results
 
 node_modules
 npm-debug.log
+
+*.komodoproject
+.settings
+.settings.xml
+.c9revisions
