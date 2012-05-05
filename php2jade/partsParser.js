@@ -52,7 +52,7 @@ function PartsParser(ss) {
         currentIndex++ ;
 //        console.log('stepContent added %s (%s)', cch, cp.code);
 
-        if (currentIndex<=source.length) {
+        if (currentIndex<source.length) {
           cch = source[currentIndex];
         }
         else {
@@ -85,7 +85,7 @@ function PartsParser(ss) {
         cp.code += cch ;
         currentIndex++ ;
 
-        if (currentIndex<=source.length) {
+        if (currentIndex<source.length) {
           cch = source[currentIndex];
         }
         else { //well, it's almost impossiblle situation for '<!DOCTYPE' entries, but just in case
@@ -102,12 +102,18 @@ function PartsParser(ss) {
  */
   function stepFindNewPart() {
 //    console.log('stepFindNewPart here');
+    var cch = '';
+    if (currentIndex<source.length) {
+      cch = source.charAt(currentIndex);
+    }
+    else {
+      nextStep = null;
+      return ;
+    }
 
-    var cch = source.charAt(currentIndex);
-//    var spacere = new RegExp('/[ \f\n\r\t\v\u00A0\u2028\u2029]/');
     while( (cch===' ') || (cch==='\t') || (cch==='\r') || (cch==='\n') ) {
       currentIndex++ ;//
-      if (currentIndex<=source.length) {
+      if (currentIndex<source.length) {
         cch = source.charAt(currentIndex);
       }
       else {
@@ -121,7 +127,7 @@ function PartsParser(ss) {
       nextStep = stepLt;
     }
     else {
-//      console.log('stepFindNewPart: will go to stepContent (%s, %i)', util.inspect(cch), currentIndex);
+      console.log('stepFindNewPart: will go to stepContent (%s, %i)', util.inspect(cch), currentIndex);
       nextStep = stepContent;
     }
   }
@@ -148,7 +154,7 @@ function PartsParser(ss) {
         cp.code += cch ;
         currentIndex++ ;
 
-        if (currentIndex<=source.length) {
+        if (currentIndex<source.length) {
           cch = source[currentIndex];
         }
         else {
@@ -260,7 +266,7 @@ function PartsParser(ss) {
         cp.code += cch ;
         currentIndex++ ;
 
-        if (currentIndex<=source.length) {
+        if (currentIndex<source.length) {
           cch = source[currentIndex];
         }
         else {
