@@ -15,7 +15,7 @@ var util = require('util');
  */
 function transformFiles(sourcePath, resultPath) {
   console.log('transformFiles: here %s, to %s', sourcePath, resultPath);
-  fs.readFile(sourcePath, function(err, data) {
+  fs.readFile(sourcePath, 'utf8',  function(err, data) {
     if (err) {//
       console.log('> failed to read file %s', sourcePath);
       return ;
@@ -30,7 +30,7 @@ function transformFiles(sourcePath, resultPath) {
     });
 
 
-    fs.writeFile(resultPath, partsStr, function (err) {
+    fs.writeFile(resultPath, partsStr, 'utf8', function (err) {
       if (err) {
         console.log('> failed to write file %s', resultPath);
         return ;
