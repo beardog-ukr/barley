@@ -231,9 +231,33 @@ function PartsParser(ss) {
  *
  */
   function stepDoctype() {
-    // not implemented yet
-    errorMessage = 'Stub call: stepDoctype' ;
-    nextStep = null;
+    cp.type='doctype'; //current part
+    var cch = source[currentIndex]; //current character
+
+    var stop = false;
+    while(!stop) {
+      if (cch==='>') {
+        cp.code += cch ;
+        results.push(cp);
+        cp = {type:'', code:''}; //
+        currentIndex++ ;
+        nextStep = stepFindNewPart;
+        stop = true;
+      }
+      else {
+        cp.code += cch ;
+        currentIndex++ ;
+
+        if (currentIndex<=source.length) {
+          cch = source[currentIndex];
+        }
+        else { //well, it's almost impossiblle situation for '<!DOCTYPE' entries, but just in case
+          nextStep = null;
+          results.push(cp);
+          stop = true;
+        }
+      }
+    }
   }
 
 /**
@@ -241,8 +265,6 @@ function PartsParser(ss) {
  */
   function stepFindNewPart() {
 //    console.log('stepFindNewPart here');
-//    var fo = {type:'one', code:'two'};
-//    results.push(fo);
 
     var cch = source.charAt(currentIndex);
 //    var spacere = new RegExp('/[ \f\n\r\t\v\u00A0\u2028\u2029]/');
